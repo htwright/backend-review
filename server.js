@@ -10,9 +10,34 @@ app.use(morgan(':method :url :res[location] :status'));
 app.use(bodyParser.json());
 
 // ADD ENDPOINTS HERE
-app.get('/', (req, res)=> {
-  knex('hackernews').select().then((response)=> res.json(response));
+// app.get('/', (req, res)=>
+//   knex('hackernews').select().then((response)=> res.json(response))
+// );
+app.post('/api/stories', (req, res) =>{
+  // res.json(req.body);
+  const requiredFields = ['title', 'url'];
+  for (let i=0; i < requiredFields.length; i++){
+    const field = requiredFields[i];
+    if (!(field in req.body)){
+      const message = `missing ${field} in request!`;
+      console.error(message);
+      return res.status(401);
+    }
+  }
+  knex('hackernews').insert({title: req.body.title, url: req.body.url}, ['id', 'title'])
+  .then((end) => res.json(end));
+});
+
+app.get('/api/stories', (req, res)=>{
+  knex('hackernews').select().orderBy('votes', 'desc').limit(20).then((response)=> res.json(response));
 })
+app.put('/api/stories/:id', (req, res)=>{
+  let voteId = req.params.id;
+  knex('hackernews',['title','url']).select().where('id', '=', voteId)
+  .increment('votes', '1')
+  .then(res.status(204).send())
+})
+
 
 let server;
 let knex;
