@@ -1,0 +1,26 @@
+{
+  "name": "backend-review",
+  "version": "1.0.0",
+  "description": "Thinkful 4-26 backend review",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htwright/backend-review.git"
+  },
+  "author": "Harrison, Saule",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/htwright/backend-review/issues"
+  },
+  "homepage": "https://github.com/htwright/backend-review#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "knex": "^0.12.9",
+    "morgan": "^1.8.1",
+    "pg": "^6.1.5"
+  }
+}
