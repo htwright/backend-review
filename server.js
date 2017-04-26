@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const { DATABASE, PORT } = require('./config');
-
 const app = express();
 
 app.use(morgan(':method :url :res[location] :status'));
@@ -11,6 +10,9 @@ app.use(morgan(':method :url :res[location] :status'));
 app.use(bodyParser.json());
 
 // ADD ENDPOINTS HERE
+app.get('/', (req, res)=> {
+  knex('hackernews').select().then((response)=> res.json(response));
+})
 
 let server;
 let knex;
